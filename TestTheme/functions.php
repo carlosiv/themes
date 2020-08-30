@@ -5,7 +5,10 @@ function load_css(){
     wp_enqueue_style('bootstrap');
 
     wp_register_style('main', get_template_directory_uri() . '/css/main.css', array(), false, 'all');
-    wp_enqueue_style('main');
+    wp_enqueue_style('main'); 
+    
+    wp_register_style('carousel', get_template_directory_uri() . '/css/carousel.css', array(), false, 'all');
+    wp_enqueue_style('carousel');
 }
 
 add_action('wp_enqueue_scripts','load_css');
@@ -22,6 +25,7 @@ add_action('wp_enqueue_scripts','load_js');
 
 //theme support
 add_theme_support( 'menus');
+add_theme_support('post-thumbnails');
 
 //menus
 register_nav_menus( 
@@ -29,3 +33,7 @@ register_nav_menus(
         'top-menu' => 'Top Menu',
     )
     );
+
+// Custom Image Sizes
+add_image_size('blog-large', 800, 600, false);
+add_image_size('blog-small', 300, 200, true);
