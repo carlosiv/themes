@@ -26,6 +26,7 @@ add_action('wp_enqueue_scripts','load_js');
 //theme support
 add_theme_support( 'menus');
 add_theme_support('post-thumbnails');
+add_theme_support('widgets');
 
 //menus
 register_nav_menus( 
@@ -37,3 +38,72 @@ register_nav_menus(
 // Custom Image Sizes
 add_image_size('blog-large', 800, 600, false);
 add_image_size('blog-small', 300, 200, true);
+
+// Register Sidebars
+function my_sidebars()
+{
+			register_sidebar(
+						array(
+								'name' => 'Page Sidebar',
+								'id' => 'page-sidebar',
+								'before_title' => '<h3 class="widget-title">',
+								'after_title' => '</h3>'
+						)
+			);
+
+			register_sidebar(
+						array(
+								'name' => 'Blog Sidebar',
+								'id' => 'blog-sidebar',
+								'before_title' => '<h3 class="widget-title">',
+								'after_title' => '</h3>'
+						)
+			);
+
+}
+add_action('widgets_init','my_sidebars');
+
+function phone_post_type()
+{
+
+	$args = array(
+
+
+		'labels' => array(
+
+					'name' => 'Phones',
+					'singular_name' => 'Phone',
+		),
+		'hierarchical' => true,
+		'public' => true,
+		'has_archive' => true,
+		'menu_icon' => 'dashicons-phone',
+		'supports' => array('title', 'editor', 'thumbnail','custom-fields'),
+			);
+
+	register_post_type('phones', $args);
+
+
+}
+add_action('init', 'phone_post_type');
+
+function phone_taxonomy()
+{
+
+			$args = array(
+
+					'labels' => array(
+							'name' => 'Brands',
+							'singular_name' => 'Brand',
+					),
+
+					'public' => true,
+					'hierarchical' => true,
+
+			);
+
+
+			register_taxonomy('brands', array('phones'), $args);
+
+}
+add_action('init', 'phone_taxonomy');
